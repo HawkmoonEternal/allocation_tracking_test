@@ -1,10 +1,15 @@
 # Tests for tracking allocations in PRRTE
 This repo provides simple tests for the allocation tracking in PRRTE.
-It runs a scheduler which connects to PRRTE, spawns the 'spawner' job and asnwers allocation request.
-The spawner job:
-    * requests to extend its own allocation
-    * requests a new allocation
-    * spawns a new spawner job in the new allocation
+
+Scheduler:
+1. connects to PRRTE
+2. spawns the initial 'spawner' job 
+3. answers allocation requests
+
+'spawner' job:
+1. requests to extend its own allocation
+2. requests a new allocation
+3. spawns a new 'spawner' job into the new allocation
 
 ## Running the tests
 export path to PMIx installation:
@@ -19,15 +24,15 @@ Run the server:
 ```
 ./server [arg0] [arg1] [arg2] [arg3]
     arg0: node_pool         - nodes available for scheduling 
-    arg1: initial_hosts     - host initially used by the PRRTE DVM 
-    arg2: recursive_jobs    - number of spawner jobs to be run (total jobs: recursive_jobs + 1) 
+    arg1: initial_hosts     - hosts initially used by the PRRTE DVM 
+    arg2: recursive_jobs    - number of spawner jobs to be run
     arg3: num procs         - number of processes per spawner job 
 ```
 ## Example
 ```
 ./server  n01:8,n02:8,n03:8,n04:8,n05:8,n06:8,n07:8,n08:8,n09:8 n01:8,n02:8 3 8
 ```
-Runs the scheduler with 9 nodes available for scheduling, starts the PRRTE DVM on the first two nodes and recursively spawns 3 spawner jobs a 8 processes.
+Runs the scheduler with 9 nodes available for scheduling, starts the PRRTE DVM on the first two nodes and recursively spawns 3 spawner jobs à 8 processes.
 
 Output:
 ```
